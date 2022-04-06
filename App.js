@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import BookDetail from './components/screens/BookDetail';
+import ShoppingCart from './components/screens/ShoppingCart';
+import WishList from './components/screens/WishList';
+import { COLORS } from './resources/index';
+import {StatusBar} from 'react-native';
+import HomePage from './pages/HomePage';
+import FavoritePage from './pages/FavoritePage';
+import { Provider } from 'react-redux';
+import store from './redux/store'
 
-export default function App() {
+const App = () => {
+  const Stack = createNativeStackNavigator();
+  
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store = {store}>
+      <NavigationContainer>
+        <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
+          <Stack.Navigator screenOptions={{ headerShown: false, }}>
+            <Stack.Screen name="HomePage" component={HomePage}/>
+            <Stack.Screen name="BookDetail" component={BookDetail}/>
+            <Stack.Screen name="ShoppingCart" component={ShoppingCart}/>
+            <Stack.Screen name="FavoritePage" component={FavoritePage}/>
+          </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
